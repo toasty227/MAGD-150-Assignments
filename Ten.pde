@@ -125,7 +125,7 @@ void setup(){
   size(1280,700);  //size for sketch
   dude = loadImage("https://cloud.githubusercontent.com/assets/16229377/11834057/806a430e-a38e-11e5-915a-b856c8debda2.png");  //load man image
   lady = loadImage("https://cloud.githubusercontent.com/assets/16229377/11834068/9a097a0a-a38e-11e5-9300-ea36a233608d.png");  //load woman image
-  boulder = loadImage("rock.png");  //load rock image
+  boulder = loadImage("https://cloud.githubusercontent.com/assets/16229377/11834094/b75e0288-a38e-11e5-9d68-48217300f54e.png");  //load rock image
   myMan = new Man();  //create man from class
   myRock = new Rock[1000];  //create array with 1000 slots
   for(int x = 0; x < myRock.length - 1; x++){  //create 1000 instances of rocks
