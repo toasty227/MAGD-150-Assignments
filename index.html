@@ -62,7 +62,7 @@
   }
   
   void win(){
-    if(manX > 40 && manX < 130 && manY < 140){  //set collision detection for man on girl
+    if(manX > 40 & manX < 130 & manY < 140){  //set collision detection for man on girl
       gravity = 0;  //change gravity so man won't fall anymore
       background(0);  //background for victory screen
       text("YOU WIN!!!!",550,350);  //text saying you win
@@ -111,7 +111,7 @@ class Timer{  //class for timer
 
   boolean isFinished(){  //checks if timer is over
     float passedTime = millis() - startTime;
-    if((passedTime > stopTime) && (started)) {
+    if((passedTime > stopTime) & (started)) {
       return true;
     } else {
       return false;
@@ -154,7 +154,7 @@ void menu(){  //function for menu screen
   stroke(255);  //set stroke to white
   rect(545,500,115,50);  //create box for start button
   text("START",550,540);  //lable start button
-  if(mouseX > 545 && mouseX < 660 && mouseY > 500 && mouseY < 550){  //setup collision for start button
+  if(mouseX > 545 & mouseX < 660 & mouseY > 500 & mouseY < 550){  //setup collision for start button
     fill(255,50);  //change fill and transparancy to indicate collision
     if(mousePressed){
       play = true;  //if mouse is pressed over button change play to true
