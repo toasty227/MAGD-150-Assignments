@@ -62,7 +62,7 @@
   }
   
   void win(){
-    if(manX > 40 & manX < 130 & manY < 140){  //set collision detection for man on girl
+    if(manX > 40 && manX < 130 && manY < 140){  //set collision detection for man on girl
       gravity = 0;  //change gravity so man won't fall anymore
       background(0);  //background for victory screen
       text("YOU WIN!!!!",550,350);  //text saying you win
@@ -111,7 +111,7 @@ class Timer{  //class for timer
 
   boolean isFinished(){  //checks if timer is over
     float passedTime = millis() - startTime;
-    if((passedTime > stopTime) & (started)) {
+    if((passedTime > stopTime) && (started)) {
       return true;
     } else {
       return false;
@@ -154,7 +154,7 @@ void menu(){  //function for menu screen
   stroke(255);  //set stroke to white
   rect(545,500,115,50);  //create box for start button
   text("START",550,540);  //lable start button
-  if(mouseX > 545 & mouseX < 660 & mouseY > 500 & mouseY < 550){  //setup collision for start button
+  if(mouseX > 545 && mouseX < 660 && mouseY > 500 && mouseY < 550){  //setup collision for start button
     fill(255,50);  //change fill and transparancy to indicate collision
     if(mousePressed){
       play = true;  //if mouse is pressed over button change play to true
@@ -427,33 +427,336 @@ void mousePressed(){
         The theme was logic fallacy memes. I chose to make a meme off of the bandwaggoning fallacy, appealing to
         popularity, that is a variation of the Kermit meme where he sips his tea. Click to see the rest of the phrase.
         <br />
-  <h1>Your Sketch3 Title</h1>
+  <h1>Puck Around the Rink</h1>
   <script type="text/processing" data-processing-target="mycanvas3">
   
-  <!-- Your sketch3 goes here -->
+  int puckX = 300;  //vairiable for puck x postion
+int puckY = 320;  //variable for puck y position
+boolean puckMove = false;  //variable to control if rink shows or not
+int moveSpeedX = 3;  //variable for puck x axis movement
+int puckDiam = 10;  //variable for puck diameter
+int moveSpeedY = 1;  //variable for puck y axis movement
+int box;
+
+void setup(){
+  size(1280,700);  //window size
+}
+
+void draw(){
+  background(0);  //original background
+  for(box=1;box < 75;box++){  //for loop to create background squares start
+    noFill();
+    stroke(255);
+    rectMode(CENTER);
+    rect(width/2,height/2,box*20,box*20);
+  }  //for loop to create background squares end
+  textSize(32);  //size for text
+  fill(100,150,250);  //text color
+  text("Press mouse to begin",500,350);  //instructional text
+  if (puckMove){  //if puckMove true execute this
+      background(200);  //rink background
+      rectMode(CORNER);  //reset rectMode to corner
+      fill(255);  //fill for ice
+    rect(280,150,720,400);  //ice main part
+    stroke(175,0,0);  //stroke for red line
+    fill(175,0,0);  //fill for red line
+    rectMode(CENTER);  //rect mode for red and blue lines
+    rect(width/2,350,10,400);  //red line
+    fill(0,0,100);  //fill for center dot
+    stroke(0,0,100);  //stroke for center dot
+    ellipse(width/2,350,15,15);  //center dot
+    stroke(0);  //stroke for ice ends
+    fill(255);  //fill for ice
+    arc(280,350,100,400,HALF_PI,PI+HALF_PI);  //left ice end
+    arc(1000,350,100,400,PI+HALF_PI,TWO_PI+HALF_PI);  //right ice end
+    stroke(200,0,0);  //stroke for faceoff circles and goal lines
+    fill(200,0,0);  //fill for goal lines
+    rect(280,350,5,400);  //left goal line
+    rect(1000,350,5,400);  //right goal line
+    noFill();  //fill of faceoff circles
+    ellipse(400,250,100,100);  //top left faceoff circle
+    ellipse(400,450,100,100);  //bottom left faceoff circle
+    line(395,200,395,195);  //top left faceoff circle hash marks start
+    line(405,200,405,195);
+    line(405,300,405,305);
+    line(395,300,395,305);  //top left faceoff circle hash marks end
+    line(395,400,395,395);  //bottom left faceoff circle hash marks start
+    line(405,400,405,395);
+    line(395,500,395,505);
+    line(405,500,405,505);  //bottom left faceoff circle hash marks end
+    ellipse(width-400,250,100,100);  //top right faceoff circle
+    ellipse(width-400,450,100,100);  //bottom right faceoff circle
+    line(width-405,300,width-405,305);  //top right faceoff circle hash marks start
+    line(width-395,300,width-395,305);
+    line(width-405,200,width-405,195);
+    line(width-395,200,width-395,195);  //top right faceoff circle hash marks end
+    line(width-405,400,width-405,395);  //bottom right faceoff circle hash marks start
+    line(width-395,400,width-395,395);
+    line(width-405,500,width-405,505);
+    line(width-395,500,width-395,505);  //bottom right faceoff circle hash marks end
+    fill(200,0,0);  //fill for faceoff dots
+    ellipse(400,250,15,15);  //top left faceoff dot
+    ellipse(400,450,15,15);  //bottom left faceoff dot
+    ellipse(width-400,250,15,15);  //top right faceoff dot
+    ellipse(width-400,450,15,15);  //bottom right faceoff dot
+    fill(0,0,100);  //fill for blue lines
+    stroke(0,0,100);  //stroke for blue lines
+    rect((width/2)-100,350,10,400);  //left blue line
+    rect((width/2)+100,350,10,400);  //right blue line
+    stroke(0);  //stroke for puck
+    fill(0);  //fill for puck
+    ellipse(puckX,puckY,puckDiam,puckDiam);  //puck
+    puckX = puckX + moveSpeedX;  //puck x axis movement
+    puckY = puckY + moveSpeedY;  //puck y axis movement
+  }
+  if (puckX+(puckDiam/2) >= 1050){  //puck boundries start
+    moveSpeedX = -3;
+  }
+  if (puckX+(puckDiam/2) <= 240){
+    moveSpeedX = 3;
+  }
+  if (puckY+((puckDiam/2)-15) <= 150){
+    moveSpeedY = 1;
+  }
+  if (puckY+(puckDiam/2) >= 550){
+    moveSpeedY = -1;
+  }  //puck boundries end
+}
+
+void mousePressed(){
+  puckMove = !puckMove;  //change puckMove to opposite of current state
+}
 
   </script>
   <canvas id="mycanvas3"></canvas>
   <p>Description:</p>
         <br />
+        The theme for this assignment was sports. I created a sketch where you have to click to see a hockey rink
+        with a puck bouncing around the boards.
         <br />
-  <h1>Your Sketch4 Title</h1>
+  <h1>Worlds of Sci-Fi</h1>
   <script type="text/processing" data-processing-target="mycanvas4">
   
-  <!-- Your sketch4 goes here -->
+  float posX = 100;
+float posY = 100;
+int moveX = 3;
+int moveY = 2;
+int ballDiam = 25;
+boolean shoot = false;
+color b = color(0,0,255);
+color r = color(255,0,0);
+float colorize;
+
+void setup(){
+  size(1250,700);
+  //frameRate(10);
+}
+
+void draw(){
+  if(shoot){
+    blastShot();
+  }  else{
+    abduct();
+  }
+  fill(255);
+  text("Click mouse to switch", 1100,650);  //instructions for switching scenes
+}
+
+void blastShot(){
+  background(0);
+  stroke(0);
+  fill(200);  //ground fill
+  rect(0,500,width,400);  //ground
+  fill(50);  //road fill
+  beginShape();  //road start
+  vertex(620,500);
+  vertex(630,500);
+  vertex(1050,height);
+  vertex(200,height);
+  endShape(CLOSE);  //road end
+  fill(150);  //building front fill
+  rect(0,0,100,height);  //left building front
+  rect(1150,0,100,height);  //right building front
+  fill(100);  //building side fill
+  rect(75,0,25,height);  //left building side
+  rect(1150,0,25,height);  //right building side
+  noStroke();  //stroke for lasers
+  colorize();  //function for laser color
+  ellipse(posX,posY,20,20);  //laser left side
+  rect(posX,posY-10,50,20);  //laser middle
+  ellipse(posX+50,posY,20,20);  //laser right side
+  posX = random(100,1100);  //randomize laser x
+  posY = random(100,600);  //randomize laser y
+}
+
+void mousePressed(){
+  shoot = !shoot;  //switch to opposite of shoot
+}
+
+void colorize(){
+  colorize = round(random(0,1));  //switch from red to blue
+  if(colorize == 1){
+    fill(b);
+  } else if (colorize ==0){
+    fill(r);
+  }
+}
+
+void abduct(){
+  background(0);  //background for ufos
+  fill(255);
+  ellipse(posX,posY,ballDiam,ballDiam);  //moving ball
+  noFill();  //fill for rings
+  stroke(255);  //stroke for rings
+  for(int ring = 10; ring <= 75; ring++){  //tractor beam rings start
+    ellipse(width/2 ,height/3 + ring,200 + (ring*4),50);
+  }  //tractor beam rings end
+  fill(255);  //fill for ufo
+  stroke(0);  //stroke for ufo
+  ellipse(width/2,height/4,100,100);  //ufo top
+  ellipse(width/2,height/4+25,200,50);  //ufo bottom
+  if (posX+(ballDiam/2) >= 1250){  //ball boundries start
+    moveX = -3;
+  }
+  if (posX <= 0){
+    moveX = 3;
+  }
+  if (posY <= 0){
+    moveY = 1;
+  }
+  if (posY+(ballDiam/2) >= 700){
+    moveY = -1;
+  }  //ball boundries end
+  posX = posX + moveX;  //ball moveX
+  posY = posY + moveY;  //ball moveY
+  if (posX+(ballDiam/2) >= 625 && posY >= 225){  //ball abduction start
+    moveY = -1;
+    moveX = 0;
+  }
+  if (posY <= height/4 +15 && posX + (ballDiam) >= 625){
+    moveY = 0;
+  }  //ball abduction end
+}
 
   </script>
   <canvas id="mycanvas4"></canvas>
   <p>Description:</p>
         <br />
+        The theme for this assignment was science fiction. I created to scenes, click to transition scenes, one that
+        explores aliens abducting a bouncing ball and the other demonstrating a futuristic battle with lasers from 
+        building to building.
         <br />
-  <h1>Your Sketch5 Title</h1>
+  <h1>Food!</h1>
   <script type="text/processing" data-processing-target="mycanvas5">
   
-  <!-- Your sketch5 goes here -->
+  class Hotdog{  //class to create hotdogs
+  int posX,posY;  //hotdogs position x and y variable
+  
+  Hotdog(){
+    posX = (round(random(0,width-40)));  //randomize hotdog's position
+    posY = (round(random(0,height-40)));
+  }
+  
+  void display(){
+    image(hotdog,posX,posY,35,35);  //display hotdog
+  }
+}
+
+class Hamburger{  //class to create hamburgers
+  int posX,posY;  //hamburgers positionx an y variable
+  
+  Hamburger(){
+    posX = (round(random(0,width-40)));  //randomize hamburger's position
+    posY = (round(random(0,height-40)));
+  }
+  
+  void display(){
+    image(hamburger,posX,posY,35,35);  //display hamburger
+  }
+}
+
+Hotdog myHotdog;  //first hotdog
+Hotdog mySecondHotdog;  //second hotdog
+Hotdog myThirdHotdog;  //third hotdog
+Hamburger myHamburger;  //first hamburger
+Hamburger mySecondHamburger;  //second hamburger
+Hamburger myThirdHamburger;  //third hamburger
+PImage hamburger;  //hamburger image
+PImage hotdog;  //hotdog image
+PImage smile;  //face image
+boolean ham = false;  //scene changer boolean
+int faceX = width/2;  //face position x variable
+int faceY = height/2;  //face position y variable
+
+void setup(){
+  background(20);
+  size(800,600);  //sketch size
+  hotdog = loadImage("https://cloud.githubusercontent.com/assets/16229377/11833971/b18d4c20-a38d-11e5-85c6-3f4d603aacba.png");  //hotdog image
+  hamburger = loadImage("https://cloud.githubusercontent.com/assets/16229377/11833949/807dbe08-a38d-11e5-9b1a-03afba40b9bc.png");  //hamburger image
+  smile = loadImage("https://cloud.githubusercontent.com/assets/16229377/11833985/d000c5e2-a38d-11e5-9150-b1de3cdf374f.png");  //face image
+  myHotdog = new Hotdog();  //first hotdog
+  mySecondHotdog = new Hotdog();  //second hotdog
+  myThirdHotdog = new Hotdog();  //third hotdog
+  myHamburger = new Hamburger();  //first hamburger
+  mySecondHamburger = new Hamburger();  //second hamburger
+  myThirdHamburger = new Hamburger();  //third hamburger
+  textSize(32);  //size for text
+}
+
+void draw(){
+  if (ham){  //if scene change is true
+    background(20);  //background for hamburgers
+    myHamburger.display();  //first hamburger displayed
+    mySecondHamburger.display();  //second hamburger displayed
+    myThirdHamburger.display();  //third hamburger displayed
+    text("HAMBURGERS!!!", 100,50);  //text for hamburgers
+  }  else{
+    background(20);  //background for hotdogs
+    myHotdog.display();  //first hotdog displayed
+    mySecondHotdog.display();  //second hotdog displayed
+    myThirdHotdog.display();  //third hotdog displayed
+    text("HOTDOGS!!!!",100,50);  //text for hotdogs
+  }
+  image(smile,faceX,faceY,50,50);  //face created
+  if(faceX == 0){  //start borders for face
+    faceX = faceX + 10;
+  }
+  if(faceX + 50 == width){
+    faceX = faceX - 10;
+  }
+  if(faceY == 0){
+    faceY = faceY + 10;
+  }
+  if(faceY + 50 == height){
+    faceY = faceY - 10;
+  }  //end of face borders
+}
+
+void mousePressed(){
+  ham = !ham;  //scene changer
+}
+
+void keyPressed(){
+  if(keyCode == UP){  //move face up
+    faceY = faceY - 1;
+  }
+  if (keyCode == DOWN){  //move face down
+    faceY = faceY + 1;
+  }
+  if (keyCode == LEFT){  //move face left
+    faceX = faceX - 1;
+  }
+  if (keyCode == RIGHT){  //move face right
+    faceX = faceX + 1;
+  }
+}
 
   </script>
   <canvas id="mycanvas5"></canvas>
   <p>Description:</p>
+    <br />
+    The theme for this assignment was food. I created a scene where you control a smiley face with the arrow keys and see
+    either hamburgers or hotdogs. Click on the screen to change from hamburgers to hotdogs and vice versa.
+    <br />
   </body>
 </html>  
