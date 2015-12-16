@@ -124,7 +124,7 @@ Timer rockTimer;  //timer class to spawn rocks
 void setup(){
   size(1280,700);  //size for sketch
   dude = loadImage("https://cloud.githubusercontent.com/assets/16229377/11834057/806a430e-a38e-11e5-915a-b856c8debda2.png");  //load man image
-  lady = loadImage("woman.png");  //load woman image
+  lady = loadImage("https://cloud.githubusercontent.com/assets/16229377/11834068/9a097a0a-a38e-11e5-9300-ea36a233608d.png");  //load woman image
   boulder = loadImage("rock.png");  //load rock image
   myMan = new Man();  //create man from class
   myRock = new Rock[1000];  //create array with 1000 slots
