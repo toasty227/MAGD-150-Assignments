@@ -42,7 +42,7 @@ void setup(){
   size(800,600);  //sketch size
   hotdog = loadImage("https://cloud.githubusercontent.com/assets/16229377/11833971/b18d4c20-a38d-11e5-85c6-3f4d603aacba.png");  //hotdog image
   hamburger = loadImage("https://cloud.githubusercontent.com/assets/16229377/11833949/807dbe08-a38d-11e5-9b1a-03afba40b9bc.png");  //hamburger image
-  smile = loadImage("smile.png");  //face image
+  smile = loadImage("https://cloud.githubusercontent.com/assets/16229377/11833985/d000c5e2-a38d-11e5-9150-b1de3cdf374f.png");  //face image
   myHotdog = new Hotdog();  //first hotdog
   mySecondHotdog = new Hotdog();  //second hotdog
   myThirdHotdog = new Hotdog();  //third hotdog
