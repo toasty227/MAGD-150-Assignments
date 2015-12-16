@@ -41,7 +41,7 @@ void setup(){
   background(20);
   size(800,600);  //sketch size
   hotdog = loadImage("hotdog.png");  //hotdog image
-  hamburger = loadImage("hamburger.png");  //hamburger image
+  hamburger = loadImage(https://cloud.githubusercontent.com/assets/16229377/11833949/807dbe08-a38d-11e5-9b1a-03afba40b9bc.png);  //hamburger image
   smile = loadImage("smile.png");  //face image
   myHotdog = new Hotdog();  //first hotdog
   mySecondHotdog = new Hotdog();  //second hotdog
